@@ -2,10 +2,11 @@
 using System.Threading.Tasks;
 using Frankfurt.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Frankfurt.DataAccess.Repository
 {
-    class AccountRepository : IAccountRepository
+    public class AccountRepository : IAccountRepository
     {
         private readonly DatabaseContext _context;
 
@@ -24,9 +25,9 @@ namespace Frankfurt.DataAccess.Repository
             await _context.Accounts.AddAsync(account);
         }
 
-        public IEnumerable<Account> GetAccounts()
+        public IEnumerable<Account> GetAccounts(int userId)
         {
-            return _context.Accounts;
+            return _context.Accounts.Where(a => a.UserId == userId);
         }
 
         public void RemoveAccount(Account account)

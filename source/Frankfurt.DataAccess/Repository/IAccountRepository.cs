@@ -8,7 +8,7 @@ namespace Frankfurt.DataAccess.Repository
     {
         Task<Account> GetAccount(int id);
 
-        IEnumerable<Account> GetAccounts();
+        IEnumerable<Account> GetAccounts(int userId);
 
         Task AddAccount(Account account);
 

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Frankfurt.DataAccess;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Frankfurt.Model;
 
 namespace Frankfurt.Api.Host
 {
@@ -57,7 +55,23 @@ namespace Frankfurt.Api.Host
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<DatabaseContext>();
+
+                context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
+
+                var user = new User
+                {
+                    UserName = "andris",
+                };
+                context.Users.Add(user);
+
+                context.Accounts.Add(new Account
+                {
+                    Title = "main",
+                    User = user,
+                });
+
+                context.SaveChanges();
             }
 
             if (env.IsDevelopment())

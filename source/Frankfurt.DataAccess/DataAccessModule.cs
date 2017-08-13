@@ -11,6 +11,10 @@ namespace Frankfurt.DataAccess
 
             builder.RegisterType<UnitOfWork>().AsImplementedInterfaces();
             builder.RegisterType<AccountRepository>().AsImplementedInterfaces();
+            builder.RegisterType<UserRepository>().AsImplementedInterfaces();
+
+            builder.RegisterType<AuthProvider.AuthProvider>().AsImplementedInterfaces();
+
         }
     }
 }
